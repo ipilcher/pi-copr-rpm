@@ -36,7 +36,6 @@ Source2:        @earendil-works-pi-coding-agent-%{version}-bundled-licenses.txt
 Source10:       license-checker.txt
 
 BuildArch:      noarch
-ExclusiveArch:  x86_64 aarch64
 
 Requires:       nodejs24-full-i18n
 Requires:       nodejs-esbuild = %{sys_esbuild_ver}
