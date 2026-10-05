@@ -6,6 +6,12 @@
 set -ex
 export npm_config_ignore_scripts=true
 
+#
+# Make the RPM build environment make sense
+#
+
+ln -s $(rpm --eval '%{_topdir}') ~/rpmbuild
+
 
 #
 # Determine the version
