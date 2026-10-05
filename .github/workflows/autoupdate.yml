@@ -1,0 +1,30 @@
+# SPDX-FileCopyrightText: 2026 Ian Pilcher <arequipeno@gmail.com>
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+name: Auto-rebuild Fedora COPR
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:      # Allows manual trigger from GitHub UI
+
+jobs:
+  check-versions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          set -ex -o pipefail
+          NPM_VERSION=$(npm view @earendil-works/pi-coding-agent version)
+          COPR_VERSION=$(curl --silent --show-error --fail --get \
+                  https://copr.fedorainfracloud.org/api_3/package \
+                  --data-urlencode ownername=ipilcher \
+                  --data-urlencode projectname=pi-coding-agent \
+                  --data-urlencode packagename=pi-coding-agent \
+                  --data-urlencode with_latest_build=true \
+              | jq -r .builds.latest.source_package.version \
+              | sed 's/-.*//'
+          )
+          if [ $COPR_VERSION != $NPM_VERSION ]; then
+              curl --silent --show-error --fail --request POST \
+                  ${{ secrets.COPR_WEBHOOK_URL }}
+          fi
