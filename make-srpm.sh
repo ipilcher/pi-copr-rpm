@@ -7,21 +7,6 @@ set -ex
 
 
 #
-# Install tools required to build SRPM
-#
-
-dnf -y install \
-	rpm-build \
-	rpmdevtools \
-	nodejs24-npm-bin \
-	nodejs-packaging-bundler \
-	jq \
-	sed
-
-npm install -g license-checker
-
-
-#
 # Determine the version
 #
 
@@ -52,12 +37,12 @@ npm pack \
 
 nodejs-packaging-bundler @earendil-works/pi-coding-agent $VERSION
 
-exit 0
-
 
 #
 # Check licenses & generate license-checker.txt
 #
+
+npm install -g license-checker
 
 rpmbuild -bp --nodeps pi-coding-agent.spec
 
