@@ -47,10 +47,10 @@ rpmbuild -bp --nodeps pi-coding-agent.spec
 
 SPEC_LICENSES=$(rpmspec -q --qf '%{license}' *.spec | sed 's/ AND /;/g')
 
-npm install --no-save --prefix ~/tools license-checker
+npm install --global --no-save --prefix ~/tools license-checker
 
 pushd ~/rpmbuild/BUILD/pi-coding-agent-${VERSION}-build/package
-~/tools/license-checker \
+~/tools/bin/license-checker \
 	--relativeLicensePath \
 	--onlyAllow "$SPEC_LICENSES" \
 	> ~/rpmbuild/SOURCES/license-checker.txt
