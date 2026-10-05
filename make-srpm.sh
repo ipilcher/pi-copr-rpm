@@ -4,6 +4,7 @@
 
 
 set -ex
+export npm_config_ignore_scripts=true
 
 
 #
@@ -42,14 +43,14 @@ nodejs-packaging-bundler @earendil-works/pi-coding-agent $VERSION
 # Check licenses & generate license-checker.txt
 #
 
-npm install -g license-checker
-
 rpmbuild -bp --nodeps pi-coding-agent.spec
 
 SPEC_LICENSES=$(rpmspec -q --qf '%{license}' *.spec | sed 's/ AND /;/g')
 
-pushd ~/rpmbuild/BUILD/pi-coding-agent-1.0.3-build/package
-license-checker \
+npm install --no-save --prefix ~/tools license-checker
+
+pushd ~/rpmbuild/BUILD/pi-coding-agent-${VERSION}-build/package
+~/tools/license-checker \
 	--relativeLicensePath \
 	--onlyAllow "$SPEC_LICENSES" \
 	> ~/rpmbuild/SOURCES/license-checker.txt
