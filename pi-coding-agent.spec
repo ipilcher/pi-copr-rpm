@@ -18,7 +18,7 @@ Version:        1.0.1
 Release:        1%{?dist}
 Summary:        An open source coding agent
 
-License:        MIT AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND BlueOak-1.0.0 AND 0BSD AND CC-BY-SA-4.0 AND CC0-1.0
+License:        MIT AND Apache-2.0 AND BSD-2-Clause AND BSD-3-Clause AND ISC AND BlueOak-1.0.0 AND 0BSD AND CC-BY-SA-4.0 AND CC0-1.0 AND Unlicense
 # To add a LICENSE file to the project
 # https://github.com/badlogic/pi-mono/issues/4215
 # MIT is mentioned in the README.md
