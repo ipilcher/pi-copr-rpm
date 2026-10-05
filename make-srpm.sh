@@ -63,7 +63,7 @@ rpmbuild -bp --nodeps pi-coding-agent.spec
 
 SPEC_LICENSES=$(rpmspec -q --qf '%{license}' *.spec | sed 's/ AND /;/g')
 
-pushd /root/rpmbuild/BUILD/pi-coding-agent-1.0.3-build/package
+pushd ~/rpmbuild/BUILD/pi-coding-agent-1.0.3-build/package
 license-checker \
 	--relativeLicensePath \
 	--onlyAllow "$SPEC_LICENSES" \
@@ -72,7 +72,7 @@ popd
 
 
 #
-# Build the SRPM
+# COPR wants the SPEC and sources (not an SRPM) in the working directory
 #
 
-rpmbuild -bs pi-coding-agent.spec
+mv ~/rpmbuild/SOURCES/* .
