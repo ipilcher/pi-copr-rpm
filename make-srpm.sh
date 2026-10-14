@@ -10,7 +10,7 @@ export npm_config_ignore_scripts=true
 # Make the RPM build environment make sense
 #
 
-ln -s $(rpm --eval '%{_topdir}') ~/rpmbuild
+[ -e ~/rpmbuild ] || ln -s $(rpm --eval '%{_topdir}') ~/rpmbuild
 
 
 #
@@ -67,4 +67,4 @@ popd
 # COPR wants the SPEC and sources (not an SRPM) in the working directory
 #
 
-mv ~/rpmbuild/SOURCES/* .
+cp ~/rpmbuild/SOURCES/* .
