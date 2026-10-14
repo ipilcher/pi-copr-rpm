@@ -10,11 +10,8 @@
 
 %global npm_name @earendil-works/pi-coding-agent
 
-# esbuild RPMs must match what Pi bundles
-%global sys_esbuild_ver 0.28.2
-
 Name:           pi-coding-agent
-Version:        1.0.1
+Version:        1.2.0
 Release:        1%{?dist}
 Summary:        An open source coding agent
 
@@ -38,11 +35,8 @@ Source10:       license-checker.txt
 BuildArch:      noarch
 
 Requires:       nodejs24-full-i18n
-Requires:       nodejs-esbuild = %{sys_esbuild_ver}
 BuildRequires:  nodejs24-devel
 BuildRequires:  fdupes
-BuildRequires:  nodejs-esbuild = %{sys_esbuild_ver}
-BuildRequires:  jq
 
 %description
 Pi is a minimal terminal coding harness. Adapt pi to your workflows,
@@ -93,14 +87,6 @@ done
 find . -name 'interface.c' -print0 | xargs -0 rm -rf
 
 # remove some binaries
-PI_ESBUILD_VER="$(jq -r .version node_modules_prod/esbuild/package.json)"
-if [ "$PI_ESBUILD_VER" != "%{sys_esbuild_ver}" ]; then
-    echo "ERROR: esbuild version mismatch"
-    echo "    Pi requires version $PI_ESBUILD_VER"
-    echo "    System version is %{sys_esbuild_ver}"
-    exit 1
-fi
-rm -rf node_modules_prod/esbuild
 rm -rf node_modules_prod/@earendil-works/pi-tui/native
 rm -f node_modules_prod/@silvia-odwyer/photon-node/photon_rs_bg.wasm
 
@@ -138,6 +124,10 @@ popd
 %{_bindir}/pi
 
 %changelog
+* Wed Oct 14 2026 Ian Pilcher <arequipeno@gmail.com> - 1.2.0-1
+- Update to 1.2.0-1
+- Remove esbuild dependency
+
 * Sat Oct 3 2026 Ian Pilcher <arequipeno@gmail.com> - 1.0.1-1
 - Update to 1.0.1-1
 
